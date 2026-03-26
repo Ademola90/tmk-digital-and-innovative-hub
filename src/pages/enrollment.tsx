@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { HiArrowLeft } from "react-icons/hi";
+import {
+  HiArrowLeft,
+  HiOutlinePhone,
+  HiOutlineClipboardCopy,
+} from "react-icons/hi";
 // import { coursesData } from "../data/coursesData";
 // import Button from "../components/ui/Button";
 import { useToastStore } from "../store/toastStore";
 import { coursesData } from "../data/courseData";
 import Button from "../components/ui/buttons";
+import { getStateNames, getLGAsByState } from "../data/nigerianLocations";
 
 const Enrollment = () => {
   useEffect(() => {
@@ -18,14 +23,20 @@ const Enrollment = () => {
   const addToast = useToastStore((state) => state.addToast);
 
   const [step, setStep] = useState(1);
+  const [showPaymentReceipt, setShowPaymentReceipt] = useState(false);
+  const [selectedState, setSelectedState] = useState<string>("");
+  const [lgas, setLgas] = useState<string[]>([]);
+  const [copiedAccountNumber, setCopiedAccountNumber] = useState(false);
+  const stateNames = getStateNames();
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
     gender: "",
-    track: "Weekdays (Twice a week)",
-    location: "Mainland",
+    track: course?.frequency || "Weekdays (Twice a week)",
+    location: "",
     referralSource: [] as string[],
     paymentMethod: "Pay Now In Full",
     paymentOption: "Pay Online",
@@ -34,6 +45,30 @@ const Enrollment = () => {
   const [accountNumber] = useState("18722139");
   const [accountName] = useState("Ademola Abdullahi Akofe");
   const [bank] = useState("Access Bank");
+
+  // Calculate installment payments
+  const getDurationMonths = () => {
+    if (!course?.duration) return 1;
+    const match = course.duration.match(/\d+/);
+    return match ? parseInt(match[0]) : 1;
+  };
+
+  const getInstallmentAmount = () => {
+    const months = getDurationMonths();
+    return Math.floor((course?.price || 0) / months);
+  };
+
+  const getPayLaterDueDate = () => {
+    const date = new Date();
+    date.setDate(date.getDate() + 7);
+    return date.toLocaleDateString();
+  };
+
+  const copyAccountNumber = () => {
+    navigator.clipboard.writeText(accountNumber);
+    setCopiedAccountNumber(true);
+    setTimeout(() => setCopiedAccountNumber(false), 2000);
+  };
 
   if (!course) {
     return (
@@ -51,6 +86,12 @@ const Enrollment = () => {
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // Handle state selection for LGA filtering
+    if (name === "location") {
+      setSelectedState(value);
+      setLgas(getLGAsByState(value));
+    }
   };
 
   const handleCheckboxChange = (value: string) => {
@@ -89,8 +130,25 @@ const Enrollment = () => {
   };
 
   const handleComplete = () => {
-    addToast("Registration completed successfully!", "success");
-    navigate("/courses");
+    setShowPaymentReceipt(true);
+  };
+
+  const handleSendWhatsApp = () => {
+    // Send WhatsApp message with course details
+    const courseInfo = `
+Course Registration Details:
+📚 Course: ${course?.title}
+💰 Price: ₦${course?.price.toLocaleString()}
+⏱️ Duration: ${course?.duration}
+📍 Location: ${formData.location}
+🎯 Mode: ${course?.mode}
+`;
+
+    const whatsappLink = `https://wa.me/2348134392733?text=${encodeURIComponent(courseInfo)}`;
+    window.open(whatsappLink, "_blank");
+
+    addToast("Registration completed! WhatsApp opened...", "success");
+    setTimeout(() => navigate("/courses"), 2000);
   };
 
   const progressPercent = (step / 4) * 100;
@@ -229,16 +287,15 @@ const Enrollment = () => {
                   <label className="block text-sm font-semibold text-dark mb-2">
                     Track <span className="text-red-500">*</span>
                   </label>
-                  <select
-                    name="track"
-                    value={formData.track}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                  >
-                    <option>Weekdays (Twice a week)</option>
-                    <option>Weekends (Once a week)</option>
-                    <option>Full Time</option>
-                  </select>
+                  <input
+                    type="text"
+                    value={course?.frequency || ""}
+                    disabled
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-700 cursor-not-allowed"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    This is based on your selected course
+                  </p>
                 </div>
               </div>
             </div>
@@ -246,21 +303,46 @@ const Enrollment = () => {
 
           {step === 2 && (
             <div className="space-y-6">
-              <div>
-                <label className="block text-sm font-semibold text-dark mb-3">
-                  Location <span className="text-red-500">*</span>
-                </label>
-                <select
-                  name="location"
-                  value={formData.location}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                >
-                  <option>Mainland</option>
-                  <option>Island</option>
-                  <option>Ikoyi</option>
-                  <option>Victoria Island</option>
-                </select>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-dark mb-3">
+                    State <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    name="location"
+                    value={selectedState}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  >
+                    <option value="">Select State</option>
+                    {stateNames.map((state) => (
+                      <option key={state} value={state}>
+                        {state}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-dark mb-3">
+                    Local Government Area{" "}
+                    <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    value={formData.location}
+                    onChange={(e) =>
+                      setFormData({ ...formData, location: e.target.value })
+                    }
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                    disabled={!selectedState}
+                  >
+                    <option value="">Select LGA</option>
+                    {lgas.map((lga) => (
+                      <option key={lga} value={lga}>
+                        {lga}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
 
               <div>
@@ -306,10 +388,11 @@ const Enrollment = () => {
                     <strong>Price:</strong> ₦{course.price.toLocaleString()}
                   </p>
                   <p>
-                    <strong>Duration:</strong> 3 Months (Twice a week)
+                    <strong>Duration:</strong> {course.duration} (
+                    {course.frequency})
                   </p>
                   <p>
-                    <strong>Start Date:</strong> 9th March, 2025
+                    <strong>Mode:</strong> {course.mode}
                   </p>
                 </div>
               </div>
@@ -340,7 +423,7 @@ const Enrollment = () => {
               {formData.paymentMethod === "Pay Now In Full" && (
                 <div>
                   <label className="block text-sm font-semibold text-dark mb-3">
-                    Pay Now In Full
+                    Payment Option
                   </label>
                   <div className="space-y-3">
                     <label className="flex items-center">
@@ -368,6 +451,26 @@ const Enrollment = () => {
                   </div>
                 </div>
               )}
+
+              {formData.paymentMethod === "Pay by Installment" && (
+                <div className="bg-amber-50 border border-amber-300 p-4 rounded-lg">
+                  <p className="text-sm text-gray-700">
+                    <strong>Installment Plan:</strong> ₦
+                    {getInstallmentAmount().toLocaleString()} per month for{" "}
+                    {getDurationMonths()} months
+                  </p>
+                </div>
+              )}
+
+              {formData.paymentMethod === "Pay Later" && (
+                <div className="bg-green-50 border border-green-300 p-4 rounded-lg">
+                  <p className="text-sm text-gray-700">
+                    <strong>Grace Period:</strong> You have until{" "}
+                    <strong>{getPayLaterDueDate()}</strong> to make your first
+                    payment of ₦{course.price.toLocaleString()}
+                  </p>
+                </div>
+              )}
             </div>
           )}
 
@@ -379,53 +482,98 @@ const Enrollment = () => {
                 </h3>
 
                 <div className="bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-lg mb-6">
-                  <p className="text-gray-700 mb-2">Total Fee</p>
-                  <p className="text-4xl font-bold text-blue-600">
-                    ₦{course.price.toLocaleString()}.00
+                  <p className="text-gray-700 mb-2">
+                    {formData.paymentMethod === "Pay by Installment"
+                      ? "Monthly Payment"
+                      : "Total Fee"}
                   </p>
+                  <p className="text-4xl font-bold text-blue-600">
+                    {formData.paymentMethod === "Pay by Installment"
+                      ? `₦${getInstallmentAmount().toLocaleString()}`
+                      : `₦${course.price.toLocaleString()}`}
+                  </p>
+                  {formData.paymentMethod === "Pay by Installment" && (
+                    <p className="text-sm text-gray-600 mt-2">
+                      Total: ₦{course.price.toLocaleString()} (
+                      {getDurationMonths()} months)
+                    </p>
+                  )}
                 </div>
 
-                <table className="w-full mb-8 border border-gray-300">
-                  <thead>
-                    <tr className="bg-gray-200">
-                      <th className="px-4 py-3 text-left font-semibold text-dark">
-                        Item
-                      </th>
-                      <th className="px-4 py-3 text-left font-semibold text-dark">
-                        Price
-                      </th>
-                      <th className="px-4 py-3 text-left font-semibold text-dark">
-                        Qty
-                      </th>
-                      <th className="px-4 py-3 text-left font-semibold text-dark">
-                        Line Total
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-t border-gray-300">
-                      <td className="px-4 py-3">{course.title}</td>
-                      <td className="px-4 py-3">
-                        ₦{course.price.toLocaleString()}.00
-                      </td>
-                      <td className="px-4 py-3">1</td>
-                      <td className="px-4 py-3">
-                        ₦{course.price.toLocaleString()}.00
-                      </td>
-                    </tr>
-                    <tr className="border-t border-gray-300 bg-gray-50">
-                      <td
-                        colSpan={3}
-                        className="px-4 py-3 text-right font-semibold"
-                      >
-                        Total
-                      </td>
-                      <td className="px-4 py-3 font-semibold">
-                        ₦{course.price.toLocaleString()}.00
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                {formData.paymentMethod !== "Pay by Installment" ? (
+                  <table className="w-full mb-8 border border-gray-300">
+                    <thead>
+                      <tr className="bg-gray-200">
+                        <th className="px-4 py-3 text-left font-semibold text-dark">
+                          Item
+                        </th>
+                        <th className="px-4 py-3 text-left font-semibold text-dark">
+                          Price
+                        </th>
+                        <th className="px-4 py-3 text-left font-semibold text-dark">
+                          Qty
+                        </th>
+                        <th className="px-4 py-3 text-left font-semibold text-dark">
+                          Line Total
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-t border-gray-300">
+                        <td className="px-4 py-3">{course.title}</td>
+                        <td className="px-4 py-3">
+                          ₦{course.price.toLocaleString()}
+                        </td>
+                        <td className="px-4 py-3">1</td>
+                        <td className="px-4 py-3">
+                          ₦{course.price.toLocaleString()}
+                        </td>
+                      </tr>
+                      <tr className="border-t border-gray-300 bg-gray-50">
+                        <td
+                          colSpan={3}
+                          className="px-4 py-3 text-right font-semibold"
+                        >
+                          Total
+                        </td>
+                        <td className="px-4 py-3 font-semibold">
+                          ₦{course.price.toLocaleString()}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                ) : (
+                  <table className="w-full mb-8 border border-gray-300">
+                    <thead>
+                      <tr className="bg-gray-200">
+                        <th className="px-4 py-3 text-left font-semibold text-dark">
+                          Month
+                        </th>
+                        <th className="px-4 py-3 text-left font-semibold text-dark">
+                          Amount
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {Array.from({ length: getDurationMonths() }).map(
+                        (_, idx) => (
+                          <tr key={idx} className="border-t border-gray-300">
+                            <td className="px-4 py-3">Month {idx + 1}</td>
+                            <td className="px-4 py-3">
+                              ₦{getInstallmentAmount().toLocaleString()}
+                            </td>
+                          </tr>
+                        ),
+                      )}
+                      <tr className="border-t border-gray-300 bg-gray-50">
+                        <td className="px-4 py-3 font-semibold">Total</td>
+                        <td className="px-4 py-3 font-semibold">
+                          ₦{course.price.toLocaleString()}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                )}
 
                 {formData.paymentOption === "Bank Transfer" && (
                   <div className="bg-yellow-50 border border-yellow-400 p-6 rounded-lg">
@@ -436,9 +584,30 @@ const Enrollment = () => {
                       <p>
                         <strong>Account Name:</strong> {accountName}
                       </p>
-                      <p>
-                        <strong>Account Number:</strong> {accountNumber}
+                      <p className="flex items-center justify-between">
+                        <span>
+                          <strong>Account Number:</strong> {accountNumber}
+                        </span>
+                        <button
+                          onClick={copyAccountNumber}
+                          className="ml-3 p-2 hover:bg-yellow-200 rounded transition-colors"
+                          title="Copy account number"
+                        >
+                          <HiOutlineClipboardCopy
+                            size={18}
+                            className={
+                              copiedAccountNumber
+                                ? "text-green-600"
+                                : "text-gray-600"
+                            }
+                          />
+                        </button>
                       </p>
+                      {copiedAccountNumber && (
+                        <p className="text-sm text-green-600 font-medium">
+                          Copied to clipboard!
+                        </p>
+                      )}
                       <p>
                         <strong>Bank:</strong> {bank}
                       </p>
@@ -474,6 +643,60 @@ const Enrollment = () => {
             />
           )}
         </div>
+
+        {/* Payment Receipt Modal */}
+        {showPaymentReceipt && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-8">
+              <h2 className="text-2xl font-bold text-dark mb-6 text-center">
+                Registration Complete!
+              </h2>
+
+              <div className="bg-green-50 border border-green-300 p-4 rounded-lg mb-6">
+                <p className="text-sm text-gray-700 mb-4">
+                  <strong>Next Step:</strong> Send your payment receipt to our
+                  WhatsApp for verification
+                </p>
+              </div>
+
+              <div className="space-y-4 mb-6">
+                <div>
+                  <p className="text-sm text-gray-600 mb-2">
+                    <strong>Course:</strong> {course?.title}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600 mb-2">
+                    <strong>Amount:</strong> ₦{course?.price.toLocaleString()}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600 mb-2">
+                    <strong>Duration:</strong> {course?.duration}
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={handleSendWhatsApp}
+                className="w-full bg-green-500 text-white px-4 py-3 rounded-lg hover:bg-green-600 transition-colors font-semibold flex items-center justify-center gap-2 mb-3"
+              >
+                <HiOutlinePhone size={20} />
+                Send Receipt via WhatsApp
+              </button>
+
+              <button
+                onClick={() => {
+                  setShowPaymentReceipt(false);
+                  navigate("/courses");
+                }}
+                className="w-full bg-gray-200 text-dark px-4 py-3 rounded-lg hover:bg-gray-300 transition-colors font-semibold"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
