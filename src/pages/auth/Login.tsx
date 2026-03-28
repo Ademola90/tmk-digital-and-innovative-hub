@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { HiEye, HiEyeOff } from "react-icons/hi";
 import { useAuthStore } from "../../store/authStore";
@@ -70,7 +70,14 @@ const Login = () => {
     try {
       await login(formData.email, formData.password);
       addToast("Login successful!", "success");
-      navigate("/");
+
+      // Check if admin login and redirect accordingly
+      const adminEmail = import.meta.env.VITE_ADMIN_EMAIL || "admin@tmk.com";
+      if (formData.email === adminEmail) {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/");
+      }
     } catch (error: unknown) {
       if (error instanceof Error) {
         addToast(error.message, "error");
@@ -175,7 +182,7 @@ const Login = () => {
             <Button
               type="submit"
               text={isLoading ? "Signing in..." : "Sign In"}
-              className="w-full bg-primary text-white hover:bg-secondary py-3 font-semibold"
+              className="w-full bg-primary text-[#1E3A8A] hover:text-[#2563EB] cursor-pointer hover:bg-secondary py-3 font-semibold"
               disabled={isLoading}
             />
           </form>
@@ -192,7 +199,7 @@ const Login = () => {
             to="/signup"
             className="w-full block text-center py-3 border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold rounded-lg transition-colors"
           >
-            Create Account
+            Create New Account
           </Link>
         </div>
 
@@ -214,6 +221,17 @@ export default Login;
 // import { useToastStore } from "../../store/toastStore";
 // import Button from "../../components/ui/buttons";
 
+// // Types
+// type LoginFormData = {
+//   email: string;
+//   password: string;
+// };
+
+// type LoginErrors = {
+//   email: string;
+//   password: string;
+// };
+
 // const Login = () => {
 //   const navigate = useNavigate();
 //   const login = useAuthStore((state) => state.login);
@@ -221,14 +239,23 @@ export default Login;
 //   const addToast = useToastStore((state) => state.addToast);
 
 //   const [showPassword, setShowPassword] = useState(false);
-//   const [formData, setFormData] = useState({
+
+//   const [formData, setFormData] = useState<LoginFormData>({
 //     email: "",
 //     password: "",
 //   });
-//   const [errors, setErrors] = useState({ email: "", password: "" });
 
+//   const [errors, setErrors] = useState<LoginErrors>({
+//     email: "",
+//     password: "",
+//   });
+
+//   // Validate Form
 //   const validateForm = () => {
-//     let newErrors = { email: "", password: "" };
+//     const newErrors: LoginErrors = {
+//       email: "",
+//       password: "",
+//     };
 
 //     if (!formData.email) {
 //       newErrors.email = "Email is required";
@@ -243,10 +270,12 @@ export default Login;
 //     }
 
 //     setErrors(newErrors);
-//     return !newErrors.email && !newErrors.password;
+
+//     return Object.values(newErrors).every((err) => err === "");
 //   };
 
-//   const handleSubmit = async (e: React.FormEvent) => {
+//   // Submit Handler
+//   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 //     e.preventDefault();
 
 //     if (!validateForm()) {
@@ -258,15 +287,22 @@ export default Login;
 //       await login(formData.email, formData.password);
 //       addToast("Login successful!", "success");
 //       navigate("/");
-//     } catch (error) {
-//       addToast("Login failed. Please try again.", "error");
+//     } catch (error: unknown) {
+//       if (error instanceof Error) {
+//         addToast(error.message, "error");
+//       } else {
+//         addToast("Login failed. Please try again.", "error");
+//       }
 //     }
 //   };
 
+//   //  Handle Input Change
 //   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 //     const { name, value } = e.target;
+
 //     setFormData((prev) => ({ ...prev, [name]: value }));
-//     if (errors[name as keyof typeof errors]) {
+
+//     if (errors[name as keyof LoginErrors]) {
 //       setErrors((prev) => ({ ...prev, [name]: "" }));
 //     }
 //   };
@@ -296,7 +332,7 @@ export default Login;
 //                 value={formData.email}
 //                 onChange={handleChange}
 //                 placeholder="you@example.com"
-//                 className={`w-full px-4 py-3 rounded-lg border-2 focus:outline-none transition-colors ${
+//                 className={`w-full px-4 py-3 rounded-lg border-2 ${
 //                   errors.email
 //                     ? "border-red-500 focus:border-red-500"
 //                     : "border-gray-200 focus:border-primary"
@@ -312,6 +348,7 @@ export default Login;
 //               <label className="block text-sm font-semibold text-dark mb-2">
 //                 Password
 //               </label>
+
 //               <div className="relative">
 //                 <input
 //                   type={showPassword ? "text" : "password"}
@@ -319,40 +356,42 @@ export default Login;
 //                   value={formData.password}
 //                   onChange={handleChange}
 //                   placeholder="••••••••"
-//                   className={`w-full px-4 py-3 rounded-lg border-2 focus:outline-none transition-colors ${
+//                   className={`w-full px-4 py-3 rounded-lg border-2 ${
 //                     errors.password
 //                       ? "border-red-500 focus:border-red-500"
 //                       : "border-gray-200 focus:border-primary"
 //                   }`}
 //                 />
+
 //                 <button
 //                   type="button"
-//                   onClick={() => setShowPassword(!showPassword)}
+//                   onClick={() => setShowPassword((prev) => !prev)}
 //                   className="absolute right-3 top-3.5 text-gray-500 hover:text-gray-700"
 //                 >
 //                   {showPassword ? <HiEyeOff size={20} /> : <HiEye size={20} />}
 //                 </button>
 //               </div>
+
 //               {errors.password && (
 //                 <p className="text-red-500 text-sm mt-1">{errors.password}</p>
 //               )}
 //             </div>
 
-//             {/* Forgot Password Link */}
+//             {/* Forgot Password */}
 //             <div className="text-right">
 //               <Link
 //                 to="/forgot-password"
-//                 className="text-primary hover:text-secondary text-sm font-semibold transition-colors"
+//                 className="text-primary hover:text-secondary text-sm font-semibold"
 //               >
 //                 Forgot Password?
 //               </Link>
 //             </div>
 
-//             {/* Login Button */}
+//             {/*  FIXED BUTTON */}
 //             <Button
+//               type="submit"
 //               text={isLoading ? "Signing in..." : "Sign In"}
-//               onClick={() => {}}
-//               className="w-full bg-primary text-white hover:bg-secondary py-3 font-semibold flex items-center justify-center gap-2"
+//               className="w-full bg-primary text-black hover:bg-secondary py-3 font-semibold"
 //               disabled={isLoading}
 //             />
 //           </form>
@@ -364,7 +403,7 @@ export default Login;
 //             <div className="flex-1 h-px bg-gray-200"></div>
 //           </div>
 
-//           {/* Sign Up Link */}
+//           {/* Sign Up */}
 //           <Link
 //             to="/signup"
 //             className="w-full block text-center py-3 border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold rounded-lg transition-colors"
