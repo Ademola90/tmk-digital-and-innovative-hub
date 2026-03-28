@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 
 interface Story {

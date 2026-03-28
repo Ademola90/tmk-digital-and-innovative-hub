@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { HiChevronDown } from "react-icons/hi";
 import type { AccordionItem } from "../data/courseDetailsData";
 
