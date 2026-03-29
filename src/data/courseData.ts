@@ -13,7 +13,7 @@ export const coursesData: Course[] = [
   {
     id: 1,
     title: "Frontend Web Development",
-    category: "Web Development",
+    category: "Web",
     image: frontendimg,
     rating: 4.5,
     price: 150000,
@@ -53,7 +53,7 @@ export const coursesData: Course[] = [
   {
     id: 3,
     title: "Backend Development",
-    category: "Backend Development",
+    category: "Web",
     image: backendimg,
     rating: 4.5,
     price: 160000,

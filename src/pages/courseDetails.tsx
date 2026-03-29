@@ -3,7 +3,6 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import {
   HiDownload,
   HiClock,
-  HiCalendar,
   HiAcademicCap,
   HiCurrencyDollar,
   HiUsers,
@@ -24,6 +23,9 @@ const CourseDetailsNew = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  const formatPrice = (amount: number) => {
+    return amount.toLocaleString("en-NG");
+  };
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const courseId = parseInt(id || "1");
@@ -55,14 +57,13 @@ const CourseDetailsNew = () => {
       value: course?.duration || "3 Months",
       subtext: course?.frequency ? `(${course.frequency})` : "(Twice a week)",
     },
-    { icon: HiCalendar, label: "Start Date", value: "9th March, 2025" },
-    { icon: HiAcademicCap, label: "Level", value: "Beginner" },
+
     { icon: FaWrench, label: "Prerequisites", value: "A Laptop" },
-    { icon: HiUsers, label: "Projects", value: "1 Project" },
+
     {
       icon: HiCurrencyDollar,
       label: "Cost",
-      value: `₦${course?.price || 350000}`,
+      value: `₦${formatPrice(course?.price || 350000)}`,
     },
   ];
 
@@ -115,20 +116,22 @@ const CourseDetailsNew = () => {
               <h1 className="text-5xl lg:text-6xl font-bold mb-6">
                 {course.title}
               </h1>
-              <p className="text-lg text-teal-100 mb-8">{course.description}</p>
+              <p className="text-lg font-roboto text-teal-100 mb-8">
+                {course.description}
+              </p>
               <div className="flex gap-4">
                 <Button
                   text="Apply Now"
-                  className="bg-dark text-white hover:bg-opacity-90"
+                  className="  cursor-pointer font-roboto  bg-[#2563EB] hover:bg-[#1d4ed8] "
                   onClick={handleApplyNow}
                 />
                 <Button
                   text="Download Syllabus"
-                  className="border-2 border-white text-white hover:bg-white hover:text-teal-600"
+                  className="border-2 border-white font-roboto text-white hover:bg-white hover:text-[#2563EB]"
                   onClick={() => setShowSyllabusModal(true)}
                 />
               </div>
-              <p className="text-teal-100 mt-6 text-sm">
+              <p className="text-teal-100 font-roboto mt-6 text-sm">
                 Applications are currently Open!
               </p>
             </div>
@@ -147,16 +150,20 @@ const CourseDetailsNew = () => {
       {/* Course Highlights Dashboard */}
       <section className="bg-gradient-to-r from-blue-900 to-blue-800 text-white py-12 px-5 lg:px-20">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
             {courseHighlights.map((item, idx) => {
               const Icon = item.icon;
               return (
                 <div key={idx} className="text-center">
                   <Icon className="w-12 h-12 mx-auto mb-3 text-teal-400" />
-                  <p className="text-sm text-blue-200 mb-1">{item.label}</p>
+                  <p className="text-sm text-blue-200 mb-1 font-roboto">
+                    {item.label}
+                  </p>
                   <p className="text-2xl font-bold">{item.value}</p>
                   {item.subtext && (
-                    <p className="text-sm text-teal-400">{item.subtext}</p>
+                    <p className="text-sm text-teal-400 font-roboto">
+                      {item.subtext}
+                    </p>
                   )}
                 </div>
               );

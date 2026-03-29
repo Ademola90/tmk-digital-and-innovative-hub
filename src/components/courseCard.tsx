@@ -37,20 +37,20 @@ const CourseCard = ({ course, bgColor }: CourseCardProps) => {
           </h3>
 
           {/* Description */}
-          <p className="text-gray-600 text-sm mb-6 flex-1 leading-relaxed line-clamp-3">
+          <p className="text-gray-600 font-roboto text-sm mb-6 flex-1 leading-relaxed line-clamp-3">
             {course.description}
           </p>
 
           {/* Metadata Footer */}
           <div className="flex items-center gap-6 pt-4 border-t border-gray-200">
             {course.duration && (
-              <div className="flex items-center gap-2 text-dark font-medium text-sm">
+              <div className="flex items-center font-roboto gap-2 text-dark font-medium text-sm">
                 <HiClock size={18} className="text-gray-600" />
                 <span>{course.duration}</span>
               </div>
             )}
             {course.frequency && (
-              <div className="flex items-center gap-2 text-dark font-medium text-sm">
+              <div className="flex items-center font-roboto gap-2 text-dark font-medium text-sm">
                 <HiCalendar size={18} className="text-gray-600" />
                 <span>{course.frequency}</span>
               </div>
