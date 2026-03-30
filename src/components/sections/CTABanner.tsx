@@ -14,10 +14,10 @@ const CTABanner = () => {
 
           {/* Content */}
           <div className="relative z-10">
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 text-balance">
+            <h2 className="text-3xl md:text-4xl font-outfit font-bold text-black mb-4 text-balance">
               Transform Your Career Today
             </h2>
-            <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl font-roboto text-black/90 font-normal mb-8 max-w-2xl mx-auto">
               Join our thriving community of learners and unlock your potential
               with industry-leading courses
             </p>
@@ -25,13 +25,13 @@ const CTABanner = () => {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link to="/courses">
-                <button className="bg-white text-primary font-bold px-8 py-4 rounded-xl hover:bg-gray-100 transition-all duration-300 shadow-lg flex items-center gap-2 group">
+                <button className="bg-[#2563EB] hover:bg-[#1d4ed8] cursor-pointer text-white font-bold px-8 py-4 rounded-xl transition-all duration-300 shadow-lg flex items-center gap-2 group">
                   Explore Courses
                   <HiArrowRight className="group-hover:translate-x-1 transition-transform" />
                 </button>
               </Link>
               <Link to="/contact">
-                <button className="border-2 border-white text-white font-bold px-8 py-4 rounded-xl hover:bg-white hover:text-primary transition-all duration-300">
+                <button className=" border-2 border-[#2563EB] font-roboto text-[#2563EB] cursor-pointer hover:bg-white hover:text-[#2563EB] font-bold px-8 py-4 rounded-xl  hover:text-primary transition-all duration-300">
                   Get in Touch
                 </button>
               </Link>
