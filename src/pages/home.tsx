@@ -1,6 +1,7 @@
+// src/pages/home.tsx
+
 import Navbar from "../components/navbar";
 import HomeHero from "../components/heros/homeHero";
-// import Stats from "../components/stats";
 import FeaturedCourses from "../components/featuredCourses";
 import About from "../components/about";
 import Instructors from "../components/instructors";

@@ -1,3 +1,5 @@
+// src/pages/courses.tsx
+
 import CourseCard from "../components/courseCard";
 import { coursesData } from "../data/courseData";
 import Navbar from "../components/navbar";

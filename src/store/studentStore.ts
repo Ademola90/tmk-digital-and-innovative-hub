@@ -1,3 +1,5 @@
+// src/store/studentStore.ts
+
 import { create } from "zustand";
 
 export interface StudentEnrollment {

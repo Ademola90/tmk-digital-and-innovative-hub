@@ -13,8 +13,11 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import StudentsManagement from "./pages/admin/Students";
 import PaymentTracking from "./pages/admin/Payment";
 import StudentDetails from "./pages/admin/StudentDetails";
-import Footer from "./components/footer";
+// import Footer from "./components/footer";
 import Toast from "./components/Toast";
+import About from "./pages/About";
+import Events from "./pages/Events";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
@@ -26,6 +29,9 @@ function App() {
             <Route path="/courses" element={<Courses />} />
             <Route path="/course/:id" element={<CourseDetailsNew />} />
             <Route path="/enroll/:id" element={<Enrollment />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/events" element={<Events />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/verify-otp" element={<VerifyOTP />} />
@@ -66,7 +72,7 @@ function App() {
             />
           </Routes>
         </main>
-        <Footer />
+        {/* <Footer /> */}
         <Toast />
       </div>
     </Router>

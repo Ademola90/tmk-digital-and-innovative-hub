@@ -1,3 +1,5 @@
+// src/data/courseDetailsData.ts
+
 export interface AccordionItem {
   id: string;
   title: string;

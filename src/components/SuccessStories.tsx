@@ -1,3 +1,5 @@
+// src/components/SuccessStories.tsx
+
 import { useState } from "react";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 

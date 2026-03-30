@@ -1,3 +1,5 @@
+// src/pages/auth/VerifyOTP.tsx
+
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";

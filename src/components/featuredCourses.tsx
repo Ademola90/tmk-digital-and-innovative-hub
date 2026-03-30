@@ -1,3 +1,4 @@
+// src/components/featuredCourses.tsx
 import { Link, useNavigate } from "react-router-dom";
 import Button from "./ui/buttons";
 import { coursesData } from "../data/courseData";

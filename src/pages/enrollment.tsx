@@ -1,3 +1,5 @@
+// src/pages/enrollment.tsx
+
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import {
@@ -5,8 +7,6 @@ import {
   HiOutlinePhone,
   HiOutlineClipboardCopy,
 } from "react-icons/hi";
-// import { coursesData } from "../data/coursesData";
-// import Button from "../components/ui/Button";
 import { useToastStore } from "../store/toastStore";
 import { coursesData } from "../data/courseData";
 import Button from "../components/ui/buttons";

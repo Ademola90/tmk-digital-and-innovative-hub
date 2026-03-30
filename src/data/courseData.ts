@@ -1,4 +1,4 @@
-// import { Course, BlogPost, Instructor } from '../types/index'
+// src/data/courseData.ts
 
 import type { BlogPost, Course, Instructor } from "../type";
 import frontendimg from "../assets/frontendimg.png";

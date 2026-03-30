@@ -1,3 +1,5 @@
+// src/components/logo.tsx
+
 import tmklogo from "../assets/tmk.png";
 
 const Logo = () => {

@@ -1,3 +1,5 @@
+// src/store/authStore.ts
+
 import { create } from "zustand";
 
 export interface User {

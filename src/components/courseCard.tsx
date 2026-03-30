@@ -1,3 +1,5 @@
+//src/components/courseCard.tsx
+
 import { Link } from "react-router-dom";
 import type { Course } from "../type";
 import { HiClock, HiCalendar } from "react-icons/hi";

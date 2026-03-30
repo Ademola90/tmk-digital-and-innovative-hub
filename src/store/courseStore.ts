@@ -1,3 +1,5 @@
+// src/store/courseStore.ts
+
 import { create } from "zustand";
 import type { Course } from "../type";
 import { coursesData } from "../data/courseData";
