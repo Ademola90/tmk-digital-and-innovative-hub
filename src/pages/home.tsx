@@ -3,13 +3,13 @@
 import Navbar from "../components/navbar";
 import HomeHero from "../components/heros/homeHero";
 import FeaturedCourses from "../components/featuredCourses";
-import About from "../components/about";
-import Instructors from "../components/instructors";
-import Community from "../components/community";
-import CTA from "../components/cat";
-import Newsletter from "../components/newsletter";
 import Footer from "../components/footer";
 import { useEffect } from "react";
+import StatsSection from "../components/sections/StatsSection";
+import WhyChooseUs from "../components/sections/WhyChooseUs";
+import SuccessStoriesGrid from "../components/SuccessStoriesGrid";
+import CTABanner from "../components/sections/CTABanner";
+import { successStories } from "../data/successStoriesData";
 
 const Home = () => {
   useEffect(() => {
@@ -19,13 +19,11 @@ const Home = () => {
     <div>
       <Navbar />
       <HomeHero />
-      {/* <Stats /> */}
+      <StatsSection />
       <FeaturedCourses />
-      <About />
-      <Instructors />
-      <Community />
-      <CTA />
-      <Newsletter />
+      <WhyChooseUs />
+      <SuccessStoriesGrid stories={successStories} />
+      <CTABanner />
       <Footer />
     </div>
   );
