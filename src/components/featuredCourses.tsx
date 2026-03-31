@@ -26,13 +26,13 @@ const FeaturedCourses = () => {
         {/* Header */}
         <div className="flex justify-between items-start mb-16">
           <div>
-            <h2 className="text-4xl lg:text-5xl font-bold text-dark">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-dark">
               OUR TOP COURSES
             </h2>
           </div>
           <Link
             to={`/courses`}
-            className="text-primary flex items-center gap-2"
+            className="text-primary lg:flex md:flex hidden items-center gap-2"
           >
             <div className=" font-semibold text-sm hover:text-secondary transition-colors flex items-center gap-1 group">
               More Courses
@@ -56,7 +56,7 @@ const FeaturedCourses = () => {
         {/* Mobile Load More Button */}
         <div className="flex justify-center lg:hidden cursor-pointer">
           <Button
-            className=" animate-pulse cursor-pointer"
+            className="  cursor-pointer bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-bold px-6 py-3 rounded-lg flex items-center gap-2 group"
             text="More Courses"
             variant="primary"
             onClick={handleViewAllCourses}

@@ -8,78 +8,82 @@ export interface SuccessStory {
   achievement: string;
   rating: number;
 }
+import testone from "../assets/testone.png";
+import testtwo from "../assets/testtwo.png";
+import testthree from "../assets/testthree.png";
+import testfour from "../assets/testfour.png";
+import testfive from "../assets/testfive.png";
+import testsix from "../assets/testsix.png";
 
 export const successStories: SuccessStory[] = [
   {
     id: 1,
-    name: "Sarah Johnson",
-    role: "Product Manager",
+    name: "Olaniyi Oluwaseun",
+    role: "Frontend Web Developer",
     company: "TechStartup Inc.",
-    image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop",
+    image: testone,
     quote:
-      "This platform transformed how I approach web development. The courses are comprehensive and the community support is outstanding.",
-    achievement: "Advanced from Junior to Senior Developer in 8 months",
+      "The Web Development program gave me a solid foundation in HTML, CSS, JavaScript, and React. I can now build modern, responsive websites confidently.",
+    achievement: "Built and deployed 10+ real-world responsive websites",
     rating: 5,
   },
   {
     id: 2,
-    name: "Ahmed Hassan",
-    role: "Full Stack Developer",
+    name: "Olaoluwa Grace",
+    role: "Fullstack Web Developer",
     company: "Digital Solutions Co.",
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
+    image: testtwo,
     quote:
-      "The hands-on projects and real-world examples helped me land a job at my dream company. Highly recommended!",
-    achievement: "Secured Senior Developer role with 40% salary increase",
+      "From frontend to backend, the Fullstack Development training helped me understand how to build complete web applications with real-world tools.",
+    achievement:
+      "Developed and deployed a fullstack app with authentication and payment integration",
     rating: 5,
   },
   {
     id: 3,
-    name: "Maria Garcia",
-    role: "UX Designer",
+    name: "Ahmed Hassan",
+    role: "UI/UX Designer (Product Designer)",
     company: "Creative Agency",
-    image:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
+    image: testthree,
     quote:
-      "The curriculum is constantly updated with the latest industry trends. Worth every penny invested.",
-    achievement: "Launched 5 successful projects with clients in 6 months",
+      "The UI/UX Design course completely changed how I design products. I now create user-centered designs that are both functional and visually appealing.",
+    achievement: "Designed 5+ user-friendly mobile and web applications",
     rating: 5,
   },
   {
     id: 4,
-    name: "David Chen",
-    role: "Tech Lead",
+    name: "Adewale David",
+    role: "Backend Developer",
     company: "Innovation Labs",
-    image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop",
+    image: testfour,
     quote:
-      "The mentorship program connected me with industry experts. Game-changer for my career.",
-    achievement: "Promoted to Tech Lead leading a team of 8 engineers",
+      "The Backend Development training helped me master APIs, databases, and server-side logic. I can now build secure and scalable systems.",
+    achievement:
+      "Built RESTful APIs and handled database architecture for production apps",
     rating: 5,
   },
   {
     id: 5,
-    name: "Lisa Wong",
-    role: "Freelance Developer",
+    name: "Adisa Flurence",
+    role: "Digital Marketer",
     company: "Indie Projects",
-    image:
-      "https://images.unsplash.com/photo-1534528741775-53994a69da36?w=400&h=400&fit=crop",
+    image: testfive,
     quote:
-      "Started as a beginner, now I'm building projects for Fortune 500 companies. Best investment ever!",
-    achievement: "Built freelance business generating $50K+ monthly revenue",
+      "The Digital Marketing program taught me SEO, social media marketing, and paid ads. I now run campaigns that bring real results.",
+    achievement:
+      "Managed ad campaigns generating consistent leads and sales growth",
     rating: 5,
   },
   {
     id: 6,
-    name: "Michael Roberts",
-    role: "Product Engineer",
+    name: "Michael Adeolu",
+    role: "Graphic Designer",
     company: "Global Tech Corp",
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
+    image: testsix,
     quote:
-      "The depth of knowledge and practical skills taught here are unmatched. Transformed my career.",
-    achievement: "Transitioned from Manual QA to Product Engineering role",
+      "The Graphic Design training improved my creativity and technical skills. I now create professional designs that attract clients.",
+    achievement:
+      "Designed branding materials for multiple businesses and startups",
     rating: 5,
   },
 ];

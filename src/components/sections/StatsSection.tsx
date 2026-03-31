@@ -9,7 +9,7 @@ const StatsSection = () => {
   const stats = [
     {
       icon: HiUsers,
-      number: "50K+",
+      number: "20",
       label: "Active Learners",
       description: "Growing community worldwide",
     },
@@ -27,9 +27,9 @@ const StatsSection = () => {
     },
     {
       icon: HiGlobeAlt,
-      number: "150+",
+      number: "16",
       label: "Countries",
-      description: "Global student network",
+      description: "Global student",
     },
   ];
 
@@ -42,7 +42,7 @@ const StatsSection = () => {
             return (
               <div
                 key={index}
-                className="text-center p-6 md:p-8 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 hover:border-primary hover:shadow-lg transition-all duration-300"
+                className="text-center p-6 md:p-8 rounded-xl bg-gradient-to-br from-blue-50 to-[#2563EB] border border-blue-100 hover:border-primary hover:shadow-lg transition-all duration-300"
               >
                 <Icon className="w-10 h-10 md:w-12 md:h-12 mx-auto mb-4 text-primary" />
                 <h3 className="text-2xl md:text-3xl font-bold text-dark mb-2">

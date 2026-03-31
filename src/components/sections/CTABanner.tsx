@@ -37,7 +37,7 @@ const CTABanner = () => {
             </div>
 
             {/* Trust Badge */}
-            <div className="mt-12 flex flex-wrap justify-center items-center gap-6 md:gap-8 text-white/80">
+            <div className="mt-12 flex flex-wrap justify-center items-center gap-6 md:gap-8 text-black/80">
               <div className="text-center">
                 <p className="font-bold text-2xl">50K+</p>
                 <p className="text-sm">Happy Learners</p>

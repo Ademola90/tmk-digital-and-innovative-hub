@@ -1,24 +1,25 @@
 import React, { useEffect } from "react";
-import { HiLightBulb, HiSparkles, HiHeart } from "react-icons/hi";
+import { HiLightBulb, HiSparkles } from "react-icons/hi";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import AboutHero from "../components/heros/aboutHero";
-import StatCard from "../components/cards/StatCard";
-import TeamMemberCard from "../components/cards/TeamMemberCard";
+// import StatCard from "../components/cards/StatCard";
+// import TeamMemberCard from "../components/cards/TeamMemberCard";
 import ValueCard from "../components/cards/ValueCard";
-import { teamData } from "../data/teamData";
+// import { teamData } from "../data/teamData";
+import { FaGraduationCap, FaUser } from "react-icons/fa";
 
 const About: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const stats = [
-    { number: "10K+", label: "Students", description: "Learning with us" },
-    { number: "50+", label: "Courses", description: "Comprehensive programs" },
-    { number: "15+", label: "Years", description: "In tech education" },
-    { number: "95%", label: "Satisfaction", description: "Student rating" },
-  ];
+  // const stats = [
+  //   { number: "10K+", label: "Students", description: "Learning with us" },
+  //   { number: "50+", label: "Courses", description: "Comprehensive programs" },
+  //   { number: "15+", label: "Years", description: "In tech education" },
+  //   { number: "95%", label: "Satisfaction", description: "Student rating" },
+  // ];
 
   const values = [
     {
@@ -29,21 +30,21 @@ const About: React.FC = () => {
       color: "blue" as const,
     },
     {
-      icon: <HiHeart />,
+      icon: <HiSparkles />,
       title: "Goal Oriented",
       description:
         "Every course is designed with clear learning objectives to help students achieve their career goals and aspirations.",
       color: "purple" as const,
     },
     {
-      icon: <HiSparkles />,
+      icon: <FaGraduationCap />,
       title: "Quality Education",
       description:
         "We maintain the highest standards in course content, instruction, and student support to ensure an exceptional learning experience.",
       color: "green" as const,
     },
     {
-      icon: <HiHeart />,
+      icon: <FaUser />,
       title: "Community Driven",
       description:
         "We believe in the power of community and create spaces where students can collaborate, support, and learn from each other.",
@@ -57,15 +58,15 @@ const About: React.FC = () => {
       <AboutHero />
 
       {/* Mission & Vision Section */}
-      <section className="py-16 md:py-24 px-5 md:px-20 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-16">
+      <section className=" lg:py-20 md:py-20 py-10 px-5 md:px-20 bg-gray-50">
+        <div className="max-w-6xl mx-auto ">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-16 ">
             {/* Mission */}
             <div className="bg-white rounded-2xl p-8 md:p-10 shadow-lg hover:shadow-xl transition-shadow">
-              <h2 className="text-3xl font-bold text-[#1E3A8A] mb-4">
+              <h2 className="text-3xl font-bold font-outfit text-[#1E3A8A] mb-4">
                 Our Mission
               </h2>
-              <p className="text-gray-700 leading-relaxed text-lg">
+              <p className="text-gray-700 font-roboto font-normal leading-relaxed text-lg">
                 To democratize technology education by providing world-class,
                 affordable, and accessible learning experiences that empower
                 individuals to build careers they love and make meaningful
@@ -89,13 +90,13 @@ const About: React.FC = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 md:py-24 px-5 md:px-20">
+      {/* <section className="py-16 md:py-24 px-5 md:px-20">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#1E3A8A] mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold font-outfit text-[#1E3A8A] mb-4">
               Our Impact by Numbers
             </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+            <p className="text-gray-600 font-roboto font-normal text-lg max-w-2xl mx-auto">
               Join thousands of students who have transformed their careers
               through our platform
             </p>
@@ -111,20 +112,20 @@ const About: React.FC = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Values Section */}
-      <section className="py-16 md:py-24 px-5 md:px-20 bg-gray-50">
+      <section className=" pb-20 px-5 md:px-20 bg-gray-50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#1E3A8A] mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold font-outfit text-[#1E3A8A] mb-4">
               Core Values
             </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+            <p className="text-gray-600 font-roboto font-normal text-lg max-w-2xl mx-auto">
               What drives us and defines how we operate
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 font-normal font-roboto lg:grid-cols-4 gap-6">
             {values.map((value, idx) => (
               <ValueCard
                 key={idx}
@@ -139,17 +140,17 @@ const About: React.FC = () => {
       </section>
 
       {/* Team Section */}
-      <section className="py-16 md:py-24 px-5 md:px-20">
+      {/* <section className="py-16 md:py-24 px-5 md:px-20">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#1E3A8A] mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold font-outfit text-[#1E3A8A] mb-4">
               Meet Our Team
             </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+            <p className="text-gray-600 font-roboto font-normal text-lg max-w-2xl mx-auto">
               Talented professionals dedicated to your success
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 font-light font-roboto lg:grid-cols-3 gap-8">
             {teamData.map((member) => (
               <TeamMemberCard
                 key={member.id}
@@ -162,7 +163,7 @@ const About: React.FC = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA Section */}
       <section className="py-16 md:py-24 px-5 md:px-20 bg-gradient-to-r from-[#1E3A8A] to-[#2563EB] text-white">

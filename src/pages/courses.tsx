@@ -21,7 +21,7 @@ const Courses = () => {
       <Navbar />
       {/* Hero Section */}
       <section className="py-16 px-5 lg:px-20 md:px-10 bg-gradient-to-r from-indigo-950 to-indigo-800">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto mt-20">
           <h1 className="text-5xl lg:text-6xl font-bold text-white mb-6">
             All Courses
           </h1>

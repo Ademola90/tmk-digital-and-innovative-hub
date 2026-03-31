@@ -10,7 +10,7 @@ const HomeHero = () => {
 
   return (
     <section className="bg-gradient-to-r from-[#1E3A8A] to-[#2563EB]  py-20 px-5 lg:px-24 md:px-10">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mt-12">
         {/* Left Content */}
         <div className=" ">
           <p className="text-[#fff] text-7xl  mb-2 font-black font-outfit ">
@@ -50,7 +50,7 @@ const HomeHero = () => {
         </div>
 
         {/* Right Content - Avatar Circles */}
-        <div className="  relative hidden lg:flex items-center justify-center">
+        <div className="  relative  lg:mt-0 md:mt-0 mt-10 lg:flex items-center justify-center">
           <div className="relative ">
             <img className=" " src={homehero} alt="" />
           </div>
